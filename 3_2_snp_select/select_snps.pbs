@@ -1,0 +1,9 @@
+#!/bin/bash
+#SBATCH --output dsq-select_snps-%A_%2a-%N.out
+#SBATCH --array 0-42
+#SBATCH --job-name dsq-select_snps
+#SBATCH -p scavenge,day,pi_zhao -n 1 --mem-per-cpu=12g -t 5:00:00 --mail-type=ALL
+
+# DO NOT EDIT LINE BELOW
+/vast/palmer/apps/avx2/software/dSQ/1.05/dSQBatch.py --job-file /gpfs/gibbs/pi/zhao/jh2875/ps_PRS/clean/code/snp_select/select_snps.job --status-dir /gpfs/gibbs/pi/zhao/jh2875/ps_PRS/clean/code/snp_select
+
