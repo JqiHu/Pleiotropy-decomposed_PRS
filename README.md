@@ -71,11 +71,6 @@ step2_inter_hr_sensitivity.R # test for interactions between traits [adjusting c
 step3_inter_subgroup_hr.R # Re-define a categorical variable with 4 levels using subgroup and dichotomized traits and calculate the HRs \
 step4_inter_subgroup_arr.R # Comparing the absolute risk (proportion of CAD) in four levels of the categorical variable 
 
-# Step 5. Additional analysis: integrated PRS
-Combine the PD-PRSs together to see if there is any improvement in prediction performance. \
-Folder: ./integrate_prs \
-integrate.R # combine all PD-PRSs together and compare the HR per sd and HR of top 10% v.s. bottom 10% 
-
 ##
 # Other folder information
 ## 1. ./trait_prs/
