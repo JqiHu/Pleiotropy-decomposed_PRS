@@ -46,7 +46,7 @@ select_ns_snps.R # form non-specific SNP subset/SNPs not in any of the pleiotrop
 Partition the CAD PRS into PD-PRSs \
 Folder: ./3_3_prs_calculation \
 ps_prs.job # parallel jobs to calculate PD-PRSs \
-prs_prepare.R # merge all PD-PRS files into one table \
+prs_prepare.R # merge all PD-PRS files into one table 
 ##
 # Step 4. Statistical analysis
 # 4.1 Phenome-wide association analysis of PD-PRSs
