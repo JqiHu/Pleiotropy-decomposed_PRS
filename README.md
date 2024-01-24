@@ -60,6 +60,7 @@ hr.R # prediction of 9 PD-PRSs for CAD
 Genetic subgroups for CAD identification based on PD-PRSs.\
 Folder: ./4_2_subgroup \
 classification.R # classify high-risk (top 5% CAD PRS) into 9 subgroups (allow overlapping) \
+pattern_size.R # identify subgroup patterns for high-risk subjects \
 rela_change.R # relative changes on specific traits between certain subgroup and remaining high-risk subjects \
 compare.R # statistical tests on the differences in specific traits between certain subgroups and remaining high-risk subjects 
 
@@ -91,11 +92,12 @@ The name corresponds to the figure tag in the article.
 Figure2_corr_traits_prs.R # Figure 2. Correlations between phenotypes and PD-PRSs. \
 Figure3_subgroup_stack.R # Figure 3. PD-PRS profiles in different pleiotropy subgroups. \
 Figure4_subgroup_relative_change.R # Figure 4. Relative changes of quantitative traits in pleiotropy subgroups. \
-Figure5_SuppFigure3_interaction_subgroup.R # Figure 5. Interactions between PD-PRS subgroup and blood pressures, smoking status. And also  Supplementary Figure 3.  Interactions between PD-PRS subgroup and triglycerides, sleep duration, Vitamin D, FVC, and FEV1 
+Figure5_SuppFigure4_interaction_subgroup.R # Figure 5. Interactions between PD-PRS subgroup and blood pressures, smoking status. And also Supplementary Figure 4. Interactions between PD-PRS subgroup and triglycerides, sleep duration, Vitamin D, FVC, and FEV1 
 #### Supplementary figures
 SuppFigure1_corr_traits.R # Supplementary Figure 1. Genetic correlations between traits. \
 SuppFigure2_HR.R # Supplementary Figure 2. Hazards ratios for CAD of overall CAD PRS, 8 PD-PRSs, and 1 NS-PRS. \
-SuppFigure4_corr_pdprs.R # Supplementary Figure 4. Correlations between 8 PD-PRS and 1 NS-PRS. 
+SuppFigure3_pattern.R # Supplementary Figure 3. Number of subjects in the top subgroup patterns. \
+SuppFigure5_corr_pdprs.R # Supplementary Figure 4. Correlations between 8 PD-PRS and 1 NS-PRS. 
 
 
 
