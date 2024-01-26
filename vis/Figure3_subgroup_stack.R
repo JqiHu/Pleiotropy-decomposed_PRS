@@ -17,6 +17,40 @@ iid <- cad_prs$IID[order(cad_prs$SCORESUM,decreasing=T)] # rank by CAD PRS from 
 long$IID <- factor(long$IID,levels=iid)
 long$psprs <- factor(long$psprs, levels=path)
 
+
+#### Calculate mean contribution of psPRSs comparing subgroup vs. remaining
+###### step 1. transform absolute values to ratio
+long$index <- paste0(long$IID,'_',long$subgroup)
+sum_prs <- aggregate(long$value,list(long$index),sum)
+long$sum_prs <- sum_prs$x[match(long$index,sum_prs$Group.1)]
+long$ratio <- long$value/long$sum_prs
+mean_contri <- c()
+for(i in 1:9){
+  subgroup <- long[long$subgroup==path[i],]
+  remain <- long[-which(long$subgroup==path[i]),]
+
+  ## absolute values
+  add1 <- aggregate(subgroup$ratio,list(subgroup$psprs),mean)
+  add2 <- aggregate(remain$ratio,list(remain$psprs),mean)
+  ## SD
+  add_sd1 <- aggregate(subgroup$ratio,list(subgroup$psprs),sd)
+  add_sd2 <- aggregate(remain$ratio,list(remain$psprs),sd)
+
+  add <- round(rbind(add1$x,add2$x)*100,1)
+  add_sd <- round(rbind(add_sd1$x,add_sd2$x),2)
+
+  add_out <- rbind(paste0(add,'% (',add_sd,')')[seq(1,18,2)],
+                   paste0(add,'% (',add_sd,')')[seq(2,18,2)])
+
+  rownames(add_out) <- c(path[i],paste0(path[i],'_Remain'))
+  mean_contri <- rbind(mean_contri,add_out)
+}
+colnames(mean_contri) <- path
+mean_contri <- cbind.data.frame(rownames(mean_contri),mean_contri)
+colnames(mean_contri)[1] <- 'Subgroup'
+library(writexl)
+write_xlsx(mean_contri,'mean_psPRS_contribution_to_subgroup.xlsx')
+
 set.seed(116)
 library('Cairo')
 library(ggpubr)
