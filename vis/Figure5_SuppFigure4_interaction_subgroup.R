@@ -22,7 +22,7 @@ trait <- c('Cholesterol','LDL direct','Triglyceride','Sleep duration',
            'Current smoking (Most or all days)','Current smoking (Most or all days)',
            'Current smoking','Current smoking')
 prs <- spl[seq(2,length(spl),2)]
-prs <- str_replace_all(prs,"Respiratory_system",'Respir')
+prs <- str_replace_all(prs,"Respiratory_syste",'Respir')
 
 # Forest plot one by one
 hr_forest <- list()
@@ -59,7 +59,7 @@ for(i in 1:length(name)){
     scale_y_discrete(labels=rev(c('Reference','Remain Exposed',
                               paste0(prs[i],' Subgroup\n Unexposed'),
                               paste0(prs[i],' Subgroup\n Exposed'))))+
-    theme(plot.title = element_text(hjust = 0,size=10,face='bold'),
+    theme(plot.title = element_text(hjust = 0,size=7,face='bold'),
           axis.title.y= element_blank(),
           text = element_text(size=7,face='bold')) +
     ggtitle(paste0(trait[i],'*',prs[i],' PD-PRS'))+
@@ -178,26 +178,26 @@ for(i in 1:length(trait)){
 library(ggpubr)
 library(gridExtra)
 ### Main figures: LDL, DBP, SBP, smoking current, frequent smoking current
-f1 <- ggarrange(hr_forest[[2]],hr_forest[[8]],hr_forest[[9]],arr_p[[2]],arr_p[[8]],arr_p[[9]],
-                hr_forest[[10]],hr_forest[[12]],NULL,arr_p[[10]],arr_p[[12]],
+f1 <- ggarrange(hr_forest[[8]],hr_forest[[9]],arr_p[[8]],arr_p[[9]],
+                hr_forest[[10]],hr_forest[[12]],arr_p[[10]],arr_p[[12]],
                 align = 'hv',
-                heights = c(rep(c(0.5,1),3),0.5,0.5,0.5,1,1),
-                labels = c('A','B','C','D','E','F','G','H','','I','J'),
-                ncol=3,nrow=4,common.legend = T) + 
+                heights = c(0.5,1,0.5,1,0.5,1,0.5,1),
+                labels = c('A','B','C','D','E','F','G','H'),
+                ncol=2,nrow=4,common.legend = T) + 
   theme(plot.margin = margin(0.1,2,0.2,0.1, "cm"))
 
 print(f1)
 
 
-pdf('../visualization/main_figure.pdf',height=10,width = 12)
+pdf('../visualization/main_figure_update.pdf',height=10,width = 12)
 print(f1)
 
 dev.off()
 
 ## Supp
-f1 <- ggarrange(hr_forest[[1]],hr_forest[[3]],hr_forest[[4]],arr_p[[1]],arr_p[[3]],arr_p[[4]],
+f1 <- ggarrange(hr_forest[[1]],hr_forest[[2]],hr_forest[[3]],arr_p[[1]],arr_p[[2]],arr_p[[3]],
                 hr_forest[[5]],hr_forest[[6]],hr_forest[[7]],arr_p[[5]],arr_p[[6]],arr_p[[7]],
-                hr_forest[[11]],hr_forest[[13]],NULL,arr_p[[11]],arr_p[[13]],
+                hr_forest[[11]],hr_forest[[13]],hr_forest[[4]],arr_p[[11]],arr_p[[13]],arr_p[[4]],
                 align = 'hv',
                 heights = c(rep(c(0.5,1),3),rep(c(0.5,1),3),0.5,0.5,0.5,1,1),
                 labels = c('A','B','C','D','E','F',
@@ -207,7 +207,7 @@ f1 <- ggarrange(hr_forest[[1]],hr_forest[[3]],hr_forest[[4]],arr_p[[1]],arr_p[[3
   theme(plot.margin = margin(0.1,2,0.2,0.1, "cm"))
 print(f1)
 
-pdf('../visualization/sup_figure.pdf',height=14,width=12)
+pdf('../visualization/sup_figure_update.pdf',height=14,width=12)
 print(f1)
 
 dev.off()
