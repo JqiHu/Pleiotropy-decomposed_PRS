@@ -105,7 +105,7 @@ for(i in 1:length(lipids_list)){
 ### Dichotomize specific phenotypes
 #### sleep duration
 data$sleep_bi <- 0
-data$sleep_bi[data$`fid_1160`>=6] <- 1
+data$sleep_bi[data$`fid_1160`<6] <- 1
 #### FVC, FEV1, PEF
 data$FVC_bi[is.na(data$`fid_3062`)==F] <- 0
 data$FVC_bi[is.na(data$`fid_3062`)==F &
@@ -129,7 +129,7 @@ data$tc_bi[data$cholesterol_lowering_medication==1] <- 1
 #### LDL
 data$ldl_bi[is.na(data$LDL_direct)==F] <- 0
 data$ldl_bi[is.na(data$LDL_direct)==F &
-              data$LDL_direct<5.6] <- 1
+              data$LDL_direct>5.6] <- 1
 data$ldl_bi[data$cholesterol_lowering_medication==1] <- 1
 #### vitamin D
 data$VD_bi[is.na(data$Vitamin_D)==F] <- 0
