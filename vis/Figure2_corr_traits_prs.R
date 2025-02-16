@@ -38,9 +38,11 @@ Category$Category <- factor(Category$Category,
 
 
 # plot heatmap for correlation coeffcients between ps-PRSs and phenotypes
+library(grid)
+library(gtable)
 
 pdf('../visualization/corr_prs_phe_update.pdf',
-	height=8,width=10)
+	height=9,width=10)
 
 pheatmap(corr2,
 	 color = colorRampPalette(c("navy", "white", "firebrick3"))(600),
@@ -48,6 +50,17 @@ pheatmap(corr2,
 	 breaks = seq(-0.06,0.06,0.0002),legend_breaks = seq(-0.06,0.06,0.02),
 	 fontsize_row=10,fontsize_col=15,legend_labels = c(seq(-0.06,0.06,0.02)),
 	 display_numbers = ifelse(corr_p2 < 0.05/(59*9), "*", ""),
-         annotation_row=Category,angle_col=315)
+   annotation_row=Category,angle_col=315,
+	 cellwidth = 36, cellheight = 9)
+# Add custom legend title
+grid.text("Beta coefficients", x = 0.74, y = 0.88, rot = 90, gp = gpar(fontsize = 12))
 
 dev.off()
+
+
+# check the minimal p-value for each PD-PRS
+mini <- apply(corr_p2, 2, function(x){rownames(corr_p2)[which.min(x)]})
+
+
+
+

@@ -1,7 +1,7 @@
 # generate plot for relative change comparing 
 # subgroup and the rest high-risk CAD
 rm(list=ls())
-setwd('~/Desktop/Research/ZHAO_HONGYU/pathwayPRS/update_V2_absolute/interactions/')
+setwd('~/Desktop/Research/ZHAO_HONGYU/pathwayPRS/update_V2_absolute/subgroup/')
 library(data.table)
 library(ggplot2)
 library(Hmisc)
@@ -20,23 +20,26 @@ getPlot <- function(data,group){ # input data for specific phenotype group and g
     scale_fill_manual(values=color)+
     #ggtitle(paste0(group,'-related traits'))+
     theme_bw()+
-    xlab('Quantitative traits')+
+    xlab('')+
     ylab(paste0('Relative change in ',group,'-related traits'))+
-    guides(fill=guide_legend(title="PD-PRS"))+
-    theme(axis.title = element_text(size=11),
-          axis.text.x = element_text(size=11, face = 'plain'),
-          axis.text.y = element_text(size = 11,face = 'plain'))+
+    guides(fill=guide_legend(title="PD-Subgroup"))+
+    theme(axis.title = element_text(size=12, face='bold'),
+          axis.text.x = element_text(size=12, face = 'bold'),
+          axis.text.y = element_text(size = 12,face = 'bold'))+
     coord_flip()
   return(p)
 }
 
 plot <- list()
 for(group in c('BP','Lipids','Obesity-obe',
-               'Obesity-renal','Respiratory','T2D')){
+               'Respiratory','T2D')){
   rela <- read_xlsx('relative_change_all.xlsx',sheet = group)
+  if(group=='Obesity-obe'){group='Obesity'}
   
   ## formate name for triats
   rela$pheno <- str_replace_all(rela$pheno,'_',' ')
+  rela$pheno[rela$pheno=='hypertation'] <- 'hypertension'
+  rela$pheno[rela$pheno=='bmi'] <- 'BMI'
   rela$pheno <- capitalize(rela$pheno)
   path <- sort(unique(rela$psPRS)) # names for psPRS in alphabetical order
   names(color) <- path 
@@ -56,28 +59,20 @@ pdf('../visualization//rela_change.pdf',
 	width=18,height=9)
 ggarrange(plot[['BP']]+ggtitle('(A) BP-related traits'),
   plot[['Lipids']] + ggtitle('(B) Lipids-related traits'),
-  plot[['Obesity-obe']] + ggtitle('(C) Obesity-related traits'),
-  plot[['Respiratory']] + ggtitle('(D) Smoking traits'),
+  plot[['Obesity']] + ggtitle('(C) Obesity-related traits'),
+  plot[['Respiratory']] + ggtitle('(D) Smoking-related traits'),
   plot[['T2D']] + ggtitle('(E) T2D-related traits'),
   ncol=3,nrow=2,common.legend=T,
+  font.label = list(size = 14, color = "black", face = "bold", family = NULL),
   legend='right',align='hv')
 
 dev.off()
 
 
-pdf('../figures/rela_change_rmOthers.pdf',
-    width=18,height=9)
-ggarrange(plot[['BP']]+ggtitle('(A) BP-related traits'),
-          plot[['Lipids']] + ggtitle('(B) Lipids-related traits'),
-          plot[['Obesity-obe']] + ggtitle('(C) Obesity-related traits'),
-          plot[['Respiratory']] + ggtitle('(F) Smoking traits'),
-          plot[['T2D']] + ggtitle('(F) T2D-related traits'),
-          ncol=3,nrow=2,common.legend=T,
-          legend='right',align='hv')
+pdf('../visualization/rela_change_Lipids.pdf',
+    width=8,height = 6)
+print(plot[['Lipids']]+ggtitle('Relative changes in Lipids-related traits'))
 
 dev.off()
-
-
-
 
 

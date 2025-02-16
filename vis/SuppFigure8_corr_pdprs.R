@@ -19,18 +19,18 @@ corr <- as.matrix(corr)
 corr_p <- as.matrix(corr_p)
 
 pdf('../visualization/corr_psprs.pdf',
-        height=12,width=12)
+    height=12,width=12)
 
 corrplot(corr,type='upper',method='color',
-	 is.corr=F,tl.col='black',tl.cex=0.8,
-	 col=c(col2(201)),
-	 cl.length=5,cl.offset = seq(0,0.1,length.out=5),
-   p.mat=corr_p,sig.level=0.05/(9*9),
-	 insig='label_sig',pch='*',
-	 pch.col='gold',tl.pos='d',
-	 addgrid.col='grey')
+         is.corr=F,tl.col='black',tl.cex=0.8,
+         col=c(col2(201)),col.lim = c(-0.01,0.01),
+         cl.length=3,cl.offset = seq(-0.1,0.1,length.out=3),
+         p.mat=corr_p,sig.level=0.05/(9*9),
+         insig='label_sig',pch='*',
+         pch.col='gold',tl.pos='d',
+         addgrid.col='grey')
 corrplot(corr_p,add=T,type='lower',number.cex=0.8,
-	 method='number',diag=FALSE,tl.pos="n", tl.cex=0.2,
-	 cl.pos="n",col='black',number.digits=4)
+         method='number',diag=FALSE,tl.pos="n", tl.cex=0.2,
+         cl.pos="n",col='black',number.digits=4)
 
 dev.off()

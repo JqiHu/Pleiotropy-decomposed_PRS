@@ -67,8 +67,9 @@ compare.R # statistical tests on the differences in specific traits between cert
 # 4.3 Interaction analyses
 Interactions between PD-PRSs/subgroups and certain traits. \
 Folder: ./4_3_interaction \
-step1_inter_hr.R # test for interactions between 29 traits and 9 PD-PRSs + 1 overall CAD PRS \
-step2_inter_hr_sensitivity.R # test for interactions between traits [adjusting confounding factors and PD-PRS] and 9 PD-PRSs + 1 overall CAD PRS \
+step0_data_prep_INT.R # Transform phenotype values by adjusting confounding factors and PD-PRS and apply inverse normal transformation on residuals \ 
+step1_inter_test.R # Test the interactions between transformed traits/diseases and PRSs \
+step2_inter_BH.R # B-H FDR control for multiple comparisons \
 step3_inter_subgroup_hr.R # Re-define a categorical variable with 4 levels using subgroup and dichotomized traits and calculate the HRs \
 step4_inter_subgroup_arr.R # Comparing the absolute risk (proportion of CAD) in four levels of the categorical variable 
 
@@ -92,18 +93,70 @@ The name corresponds to the figure tag in the article.
 Figure2_corr_traits_prs.R # Figure 2. Correlations between phenotypes and PD-PRSs. \
 Figure3_subgroup_stack.R # Figure 3. PD-PRS profiles in different pleiotropy subgroups. \
 Figure4_subgroup_relative_change.R # Figure 4. Relative changes of quantitative traits in pleiotropy subgroups. \
-Figure5_SuppFigure4_interaction_subgroup.R # Figure 5. Interactions between PD-PRS subgroup and blood pressures, smoking status. And also Supplementary Figure 4. Interactions between PD-PRS subgroup and triglycerides, sleep duration, Vitamin D, FVC, and FEV1 
+Figure5_SuppFigure6_interaction_subgroup.R # Figure 5. Interactions between PD-PRS subgroup and smoking status. And also Supplementary Figure 6. \ 
 #### Supplementary figures
 SuppFigure1_corr_traits.R # Supplementary Figure 1. Genetic correlations between traits. \
-SuppFigure2_HR.R # Supplementary Figure 2. Hazards ratios for CAD of overall CAD PRS, 8 PD-PRSs, and 1 NS-PRS. \
-SuppFigure3_pattern.R # Supplementary Figure 3. Number of subjects in the top subgroup patterns. \
-SuppFigure5_corr_pdprs.R # Supplementary Figure 4. Correlations between 8 PD-PRS and 1 NS-PRS. 
+SuppFigure3_HR.R # Supplementary Figure 3. Hazards ratios for CAD of overall CAD PRS, 8 PD-PRSs, and 1 NS-PRS. \
+SuppFigure4_pattern.R # Supplementary Figure 4. Number of subjects in the top subgroup patterns. \
+SuppFigure8_corr_pdprs.R # Supplementary Figure 8. Correlations between 8 PD-PRS and 1 NS-PRS. 
 
 
+## 3. ./sensitivity_analysis
+Scripts for sensitivity analyses. \
 
+#### Hierarchical clustering for 43 selected traits
+step1_hc.R # Perform hierarchical clustering on genetic correlation matrix; generate heatmaps for number of clusters = 5, 7, 9, 15. \
+step2_snp_select.R # Assign SNPs to newly defined clusters. \
+step3_pd_prs.sh # Calculate PD-PRSs based on newly defined clusters. \
+step4_pd_prs_organize.R # Organize PD-PRSs into one table. \
+step5_subgroup_classification.R # Partition high-risk subjects into genetic subgroups. \
+step6_subgroup_rela_change.R # Calculate relative changes of traits of interest in subgroups. \
+step7_res_organize.R # Plot Supplemental Figure 2. \
 
+#### Subgroup thresholds at 1% or 10%
+step1_subgroup_classification.R # Partition high-risk subjects into genetic subgroups based on certain threshold. \
+step2_rela_change.R # Calculate relative changes of traits of interest in subgroups. \
+step3_vis.R # Plot Supplemental Figure 5. \
 
+#### Sensitivity analyses for interactions
+##### Analysis 1. Adjust for baseline covariates only
+analysis1_step0_data_prep_INT.R # Transform phenotype values by adjusting baseline covariates and PD-PRS and apply inverse normal transformation on residuals \
+analysis1_step1_inter_test.R # Test the interactions between transformed traits/diseases and PRSs \
 
+##### Analysis 2. Directly use residuals without INT
+analysis2_step0_data_prep_Residual.R # Take Residuals after adjusting confounding and PD-PRS \
+analysis2_step1_inter_test.R # Test the interactions between transformed traits/diseases and PRSs \
 
+step2_inter_BH.R # B-H FDR control for multiple comparisons \
 
+## 4. ./simulations
+Scripts for simulations of 1 target trait and 3 quantitative traits. \
 
+##### PD-PRS framework
+step1_beta_simulation.R # Simulate beta region by region. \
+step2_SNP_subset.R # Assign SNPs to clusters. \
+step3_PD_PRS.sh # Calculate PD-PRSs based on classified SNP subsets. \
+step3_PD_PRS_organize.R # Organize PD-PRSs. \
+step4_1_Y_genetic.sh # Simulate the genetic phenotype. \
+step4_2_Y_simulate.R # Simulate phenotypes. \
+step5_subgroup_classification.R # Partition high-risk subjects into subgroups. \
+step5_subgroup_stack.R # Generate stack plots for compositions of PD-PRSs across subgroups. \
+step5_subgroup_relachange.R # Calculate relative changes of traits of interest in subgroups. \
+step6_inter_prep_INT.R # Transform simulated traits by inverse normal transfomration. \
+step6_inter_test.R # Test the interactions between transformed traits and PRSs. \
+step6_inter_test_subgroup.R # Test the interactions between transformed traits and subgroup membership. \
+
+##### Method by Chasman et al., 2019
+./method_chasman/step1_LD_prune.sh # LD pruning on simulated GWAS. \
+./method_chasman/step2_SNP_select.R # Select causal SNPs for trait 1. \
+./method_chasman/step3_scale_beta.R # Scale Beta. \
+./method_chasman/step4_beta_decomposition.R # Decompose Phenotype-SNP matrix. \
+./method_chasman/step5_prs.sh # Calculate component PRSs and overall PRS. \
+./method_chasman/step5_prs_organize.R # Organize PRSs. \
+./method_chasman/step6_assoc.R # Associations between component PRSs and simulated traits. \
+./method_chasman/step7_subgroup_classification.R # Partition high-risk subjects into subgroups. \
+./method_chasman/step7_subgroup_stack.R # Generate stack plots for compositions of PD-PRSs across subgroups. \
+./method_chasman/step7_subgroup_relachange.R # Calculate relative changes of traits of interest in subgroups. \
+
+##### Visualize results
+step7_res_vis.R # Generate Supplemental Figure 7. \

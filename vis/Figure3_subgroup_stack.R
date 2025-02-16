@@ -17,8 +17,8 @@ iid <- cad_prs$IID[order(cad_prs$SCORESUM,decreasing=T)] # rank by CAD PRS from 
 long$IID <- factor(long$IID,levels=iid)
 long$psprs <- factor(long$psprs, levels=path)
 
-
 #### Calculate mean contribution of psPRSs comparing subgroup vs. remaining
+## value is the absolute value of CAD PRS explained by PD-PRS
 ###### step 1. transform absolute values to ratio
 long$index <- paste0(long$IID,'_',long$subgroup)
 sum_prs <- aggregate(long$value,list(long$index),sum)
@@ -28,20 +28,20 @@ mean_contri <- c()
 for(i in 1:9){
   subgroup <- long[long$subgroup==path[i],]
   remain <- long[-which(long$subgroup==path[i]),]
-
+  
   ## absolute values
   add1 <- aggregate(subgroup$ratio,list(subgroup$psprs),mean)
   add2 <- aggregate(remain$ratio,list(remain$psprs),mean)
   ## SD
   add_sd1 <- aggregate(subgroup$ratio,list(subgroup$psprs),sd)
   add_sd2 <- aggregate(remain$ratio,list(remain$psprs),sd)
-
+  
   add <- round(rbind(add1$x,add2$x)*100,1)
   add_sd <- round(rbind(add_sd1$x,add_sd2$x),2)
-
+  
   add_out <- rbind(paste0(add,'% (',add_sd,')')[seq(1,18,2)],
                    paste0(add,'% (',add_sd,')')[seq(2,18,2)])
-
+  
   rownames(add_out) <- c(path[i],paste0(path[i],'_Remain'))
   mean_contri <- rbind(mean_contri,add_out)
 }
@@ -74,10 +74,10 @@ for(i in 1:length(path)){
          xlab(paste0('N = ',n))+ # n is the number of individuals* 9 psprs
          scale_fill_manual(values=color)+
          scale_y_continuous(expand = c(0, 0),limits=c(0,0.75))+
-         guides(fill=guide_legend(title="PD-PRS"))
-         theme_bw()+
+         guides(fill=guide_legend(title="PD-PRS"))+
+         theme_classic()+
          theme(axis.title = element_text(size=12,face = 'bold'),
-               axis.text.x = element_text(size = 0,angle = -90,hjust = 0,face = 'plain'),
+               axis.text.x = element_blank(),
                axis.text.y = element_text(size = 8,face = 'plain'),
                axis.line.y = element_line(colour=NULL))
 }
@@ -89,3 +89,4 @@ CairoPNG('../visualization//subgroup_stack.png',
 ggarrange(p[[1]],p[[2]],p[[3]],p[[4]],p[[5]],p[[6]],p[[7]],p[[8]],p[[9]],
           ncol=3,nrow=3,common.legend=T,legend='right')
 dev.off()
+

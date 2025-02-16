@@ -202,7 +202,7 @@ f1 <- ggarrange(hr_forest[[1]],hr_forest[[2]],hr_forest[[3]],arr_p[[1]],arr_p[[2
                 heights = c(rep(c(0.5,1),3),rep(c(0.5,1),3),0.5,0.5,0.5,1,1),
                 labels = c('A','B','C','D','E','F',
                            'G','H','I','J','K','L',
-                           'M','N','','O','P'),
+                           'M','N','O','P','Q','R'),
                 ncol=3,nrow=6,common.legend = T) + 
   theme(plot.margin = margin(0.1,2,0.2,0.1, "cm"))
 print(f1)
