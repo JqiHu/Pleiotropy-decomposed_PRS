@@ -67,6 +67,8 @@ getPlot <- function(data){ # input data for specific phenotype group and group n
     theme(axis.title = element_text(size=12, face='bold'),
           axis.text.x = element_text(size=12, face = 'bold'),
           axis.text.y = element_text(size = 12,face = 'bold'),
+	  legend.text = element_text(size = 14),
+          legend.title = element_text(size = 16),
 	  plot.margin = unit(c(1, 1, 1, 1), "cm"))+
     coord_flip()
   return(p)

@@ -113,6 +113,8 @@ for(i in 1:4){
                axis.text.x = element_blank(),
                axis.text.y = element_text(size = 8,face = 'plain'),
                axis.line.y = element_line(colour=NULL),
+	       legend.text = element_text(size = 14),
+	       legend.title = element_text(size = 16),
 	       plot.margin = unit(c(0, 0, 0, 0), "cm"))
 }
 
