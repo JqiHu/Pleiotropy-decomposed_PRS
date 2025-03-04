@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --job-name trait_prs_score
+#SBATCH --mem-per-cpu 20g
+#SBATCH -c 8 -t 1-00:00:00
+#SBATCH -p general,pi_zhao,scavenge
+#SBATCH --mail-type=ALL
+
+
+module load foss/2018b
+module load parallel
+module load PLINK/1.90-beta5.3
+
+cd /ysm-gpfs/pi/zhao-data/jh2875/ps_PRS/clean/data/trait_prs/beta/
+cat BMI* > all_BMI.txt
+cat HDL* > all_HDL.txt
+cat T2D* > all_T2D.txt
+cat Mothers_age_at_death* > all_Mothers_age_at_death.txt
+cat Cerebravas* > all_Cerebravas.txt
+cat hypertension* > all_hypertension.txt
+cat PBC* > all_PBC.txt
+cat eversmk* > all_eversmk.txt
+
+parallel plink --bfile /ysm-gpfs/pi/zhao-data/yy496/ukbb_v3/ukbb3_neale/ukbb3_imp_nealqc/tmp_Ukb_imp_v3_neal --score /ysm-gpfs/pi/zhao-data/jh2875/ps_PRS/clean/data/trait_prs/beta/all_{1}.txt 2 4 6 --out /ysm-gpfs/pi/zhao-data/jh2875/ps_PRS/clean/data/trait_prs/score/{1} \
+::: 'BMI' 'HDL' 'T2D' 'Mothers_age_at_death' 'Cerebravas' 'hypertension' 'PBC' 'eversmk'
+

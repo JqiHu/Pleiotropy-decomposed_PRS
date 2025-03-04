@@ -1,0 +1,14 @@
+#!/bin/bash 
+#SBATCH -c 9 
+#SBATCH --job-name=ps_prs
+#SBATCH --partition=scavenge,week,day,pi_zhao,bigmem
+#SBATCH --mail-type=all
+#SBATCH --output out_job.txt
+#SBATCH --mem-per-cpu=30g -t 1-00:00:00
+
+module load PLINK/1.9b_6.21-x86_64
+module load parallel
+
+cd /gpfs/gibbs/pi/zhao/jh2875/ps_PRS/clean/data/psPRS_V2_absolute/
+parallel plink --bfile /gpfs/gibbs/pi/zhao/yy496/ukb_imp/ukb_imp_qc1_set --score /gpfs/gibbs/pi/zhao/jh2875/ps_PRS/clean/data/prs_beta_selection_final_V2_absolute/{1}.txt 3 4 7 --out {1} \
+::: "Basic_condition_94079" "BP_177751" "CVD_122306" "Immune_system_137792" "Lipids_187582" "ns_snp" "Obesity_88270" "Respiratory_system_93775" "T2D_117092"

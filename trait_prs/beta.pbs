@@ -1,0 +1,9 @@
+#!/bin/bash
+#SBATCH --output dsq-beta-%A_%3a-%N.out
+#SBATCH --array 1-175
+#SBATCH --job-name dsq-beta
+#SBATCH -p pi_zhao,general,scavenge -n 1 -C avx2 --mem-per-cpu=20g -t 2-00:00:00 --mail-type=ALL
+
+# DO NOT EDIT LINE BELOW
+/ysm-gpfs/apps/software/dSQ/1.05/dSQBatch.py --job-file /gpfs/ysm/pi/zhao-data/jh2875/ps_PRS/clean/code/prs_analysis/trait_prs/beta.job --status-dir /gpfs/ysm/pi/zhao-data/jh2875/ps_PRS/clean/code/prs_analysis/trait_prs
+
